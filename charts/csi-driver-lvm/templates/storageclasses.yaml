@@ -4,7 +4,7 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: {{ .Values.lvm.storageClassStub }}-linear
+  name: {{ .Release.Name }}-linear
 {{- if not (empty $storageClass.additionalAnnotations) }}
   annotations:
     {{- $storageClass.additionalAnnotations | toYaml | nindent 4 -}}
@@ -12,7 +12,7 @@ metadata:
   labels:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
-provisioner: {{ .Values.lvm.driverName }}
+provisioner: {{ .Release.Name }}
 reclaimPolicy: {{ $storageClass.reclaimPolicy }}
 volumeBindingMode: WaitForFirstConsumer
 allowVolumeExpansion: true
@@ -25,7 +25,7 @@ parameters:
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: {{ .Values.lvm.storageClassStub }}-mirror
+  name: {{ .Release.Name }}-mirror
 {{- if not (empty $storageClass.additionalAnnotations) }}
   annotations:
     {{- $storageClass.additionalAnnotations | toYaml | nindent 4 -}}
@@ -33,7 +33,7 @@ metadata:
   labels:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
-provisioner: {{ .Values.lvm.driverName }}
+provisioner: {{ .Release.Name }}
 reclaimPolicy: {{ $storageClass.reclaimPolicy }}
 volumeBindingMode: WaitForFirstConsumer
 allowVolumeExpansion: true
@@ -46,7 +46,7 @@ parameters:
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: {{ .Values.lvm.storageClassStub }}-striped
+  name: {{ .Release.Name }}-striped
 {{- if not (empty $storageClass.additionalAnnotations) }}
   annotations:
     {{- $storageClass.additionalAnnotations | toYaml | nindent 4 -}}
@@ -54,7 +54,7 @@ metadata:
   labels:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
-provisioner: {{ .Values.lvm.driverName }}
+provisioner: {{ .Release.Name }}
 reclaimPolicy: {{ $storageClass.reclaimPolicy }}
 volumeBindingMode: WaitForFirstConsumer
 allowVolumeExpansion: true
@@ -67,7 +67,7 @@ parameters:
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: {{ .Values.lvm.storageClassStub }}-linear-encrypted
+  name: {{ .Release.Name }}-linear-encrypted
 {{- if not (empty $storageClass.additionalAnnotations) }}
   annotations:
     {{- $storageClass.additionalAnnotations | toYaml | nindent 4 -}}
@@ -75,7 +75,7 @@ metadata:
   labels:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
-provisioner: {{ .Values.lvm.driverName }}
+provisioner: {{ .Release.Name }}
 reclaimPolicy: {{ $storageClass.reclaimPolicy }}
 volumeBindingMode: WaitForFirstConsumer
 allowVolumeExpansion: true
@@ -91,7 +91,7 @@ parameters:
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: {{ .Values.lvm.storageClassStub }}-mirror-encrypted
+  name: {{ .Release.Name }}-mirror-encrypted
 {{- if not (empty $storageClass.additionalAnnotations) }}
   annotations:
     {{- $storageClass.additionalAnnotations | toYaml | nindent 4 -}}
@@ -99,7 +99,7 @@ metadata:
   labels:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
-provisioner: {{ .Values.lvm.driverName }}
+provisioner: {{ .Release.Name }}
 reclaimPolicy: {{ $storageClass.reclaimPolicy }}
 volumeBindingMode: WaitForFirstConsumer
 allowVolumeExpansion: true
@@ -115,7 +115,7 @@ parameters:
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: {{ .Values.lvm.storageClassStub }}-striped-encrypted
+  name: {{ .Release.Name }}-striped-encrypted
 {{- if not (empty $storageClass.additionalAnnotations) }}
   annotations:
     {{- $storageClass.additionalAnnotations | toYaml | nindent 4 -}}
@@ -123,7 +123,7 @@ metadata:
   labels:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
-provisioner: {{ .Values.lvm.driverName }}
+provisioner: {{ .Release.Name }}
 reclaimPolicy: {{ $storageClass.reclaimPolicy }}
 volumeBindingMode: WaitForFirstConsumer
 allowVolumeExpansion: true
