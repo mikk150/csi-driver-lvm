@@ -17,6 +17,10 @@
 {{- end }}
 {{- end }}
 
+{{- define "csi-driver-lvm.plugin.fullname" -}}
+{{- include "csi-driver-lvm.fullname" . }}
+{{- end }}
+
 {{/*
 Common labels
 */}}
@@ -117,6 +121,6 @@ csi.storage.k8s.io/node-stage-secret-namespace: {{ include "csi-driver-lvm.stora
 {{- if not (empty (index .storageclass.parameters "csi.storage.k8s.io/node-stage-secret-namespace")) }}
 {{- index .storageclass.parameters "csi.storage.k8s.io/node-stage-secret-namespace" }}
 {{- else }}
-{{- printf "%s-%s" (include "csi-driver-lvm.fullname" .global ) .storageclass.name | trunc 63 | trimSuffix "-" }}
+{{- .global.Release.Namespace }}
 {{- end }}
 {{- end }}

@@ -69,7 +69,7 @@ spec:
   allowedHostPaths:
   - pathPrefix: /lib/modules
   - pathPrefix: {{ .Values.lvm.hostWritePath }}/cache
-  - pathPrefix: {{ .Values.kubernetes.kubeletPath }}/plugins/{{ .Release.Name }}
+  - pathPrefix: {{ .Values.kubernetes.kubeletPath }}/plugins/{{ include "csi-driver-lvm.plugin.fullname" . }}
   - pathPrefix: {{ .Values.lvm.hostWritePath }}/backup
   - pathPrefix: {{ .Values.lvm.hostWritePath }}/lock
   - pathPrefix: {{ .Values.kubernetes.kubeletPath }}/plugins
@@ -207,7 +207,7 @@ spec:
         args:
         - --v=5
         - --csi-address=/csi/csi.sock
-        - --kubelet-registration-path={{ .Values.kubernetes.kubeletPath }}/plugins/{{ .Release.Name }}/csi.sock
+        - --kubelet-registration-path={{ .Values.kubernetes.kubeletPath }}/plugins/{{ include "csi-driver-lvm.plugin.fullname" . }}/csi.sock
         env:
         - name: KUBE_NODE_NAME
           valueFrom:
@@ -225,7 +225,7 @@ spec:
         volumeMounts:
         - mountPath: /csi
           name: socket-dir
-        - mountPath: {{ .Values.kubernetes.kubeletPath }}/plugins/{{ .Release.Name }}
+        - mountPath: {{ .Values.kubernetes.kubeletPath }}/plugins/{{ include "csi-driver-lvm.plugin.fullname" . }}
           name: socket-dir
         - mountPath: /registration
           name: registration-dir
@@ -315,7 +315,7 @@ spec:
       terminationGracePeriodSeconds: 30
       volumes:
       - hostPath:
-          path: {{ .Values.kubernetes.kubeletPath }}/plugins/{{ .Release.Name }}
+          path: {{ .Values.kubernetes.kubeletPath }}/plugins/{{ include "csi-driver-lvm.plugin.fullname" . }}
           type: DirectoryOrCreate
         name: socket-dir
       - hostPath:
