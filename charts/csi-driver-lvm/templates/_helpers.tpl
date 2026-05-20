@@ -90,7 +90,7 @@ app: {{ include "csi-driver-lvm.eviction.fullname" . }}
     STORAGECLASS
 */}}
 {{- define "csi-driver-lvm.storageclass.fullname" -}}
-{{- printf "%s-%s" (include "csi-driver-lvm.fullname" .global ) .storageclass.name }}
+{{- printf "%s-%s" (include "csi-driver-lvm.fullname" .global ) .storageclass.name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{- define "csi-driver-lvm.storageclass.parameters" -}}
@@ -106,8 +106,17 @@ csi.storage.k8s.io/node-stage-secret-namespace: {{ include "csi-driver-lvm.stora
 {{- end }}
 
 {{- define "csi-driver-lvm.storageclass.encryption.secret.fullname" -}}
-{{- printf "%s-%s" (include "csi-driver-lvm.fullname" .global ) .storageclass.name }}
+{{- if not (empty (index .storageclass.parameters "csi.storage.k8s.io/node-stage-secret-name")) }}
+{{- index .storageclass.parameters "csi.storage.k8s.io/node-stage-secret-name" }}
+{{- else }}
+{{- printf "%s-%s" (include "csi-driver-lvm.fullname" .global ) .storageclass.name | trunc 63 | trimSuffix "-" }}
 {{- end }}
+{{- end }}
+
 {{- define "csi-driver-lvm.storageclass.encryption.secret.namespace" -}}
-{{ .global.Release.Namespace }}
+{{- if not (empty (index .storageclass.parameters "csi.storage.k8s.io/node-stage-secret-namespace")) }}
+{{- index .storageclass.parameters "csi.storage.k8s.io/node-stage-secret-namespace" }}
+{{- else }}
+{{- printf "%s-%s" (include "csi-driver-lvm.fullname" .global ) .storageclass.name | trunc 63 | trimSuffix "-" }}
+{{- end }}
 {{- end }}
